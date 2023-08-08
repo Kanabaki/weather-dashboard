@@ -11,23 +11,37 @@
 // THEN I am again presented with current and future conditions for that city
 const tempCont = document.getElementById("temp");
 const testBtn = document.getElementById("testBtn")
-function getApi() {
-var requestUrl = "https://api.openweathermap.org/data/2.5/forecast?q=75056&appid=98ae7acbbf5494469916763d16791e78";
+const cityName = "Lewisville"
+const apiKey = "98ae7acbbf5494469916763d16791e78"
+const unit = "c or °f"
 
-fetch(requestUrl)
+
+function getApi() {
+var requestF = `https://api.openweathermap.org/data/2.5/forecast?q=${cityName}&appid=${apiKey}&units=imperial`;
+
+fetch(requestF)
 .then(function(response) { 
-    console.log(response)
+    // console.log(response)
     return response.json();
 })
 //attempt to get the temp to display on the page
-.then(function (data) {
-    for (var i = 0; i< data.length; i++) {
+.then(function(data) {
     console.log(data)
+    let date = document.createElement("p");
     let citytemp = document.createElement("p");
-    citytemp.textContent = data[i].list.main.temp;
+    let listCity = document.createElement("p");
+    let windSpd = document.createElement("p");
+    date.textContent = data.list[0].dt_txt;
+    listCity.textContent = data.city.name;
+    citytemp.textContent = data.list[0].main.temp;
+    windSpd.textContent = data.list[0].wind.speed;
+    tempCont.append(date);
+    tempCont.append(listCity);
     tempCont.append(citytemp);
-    console.log(tempCont);
-}
+    tempCont.append(windSpd);
+    citytemp.append(" °F");
+    windSpd.append(" mph");
+    console.log(temp);
 })
-}
+};
 testBtn.addEventListener('click',getApi);
