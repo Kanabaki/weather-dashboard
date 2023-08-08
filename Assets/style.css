@@ -1,3 +1,40 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+.content {
+ display:flex; 
+ background-color: aqua;  
+}
+
+header {
+    width:100%;
+    background-color: lightblue;
+}
 #temp {
+    display:flex;
     background-color: rgb(156, 245, 246);
+    flex-direction: column;
+    
+    padding:6px;
+}
+aside {
+    display:flex;
+    background-color: pink;
+    flex-direction: column;
+    max-width:250px;
+    margin:4px;
+    padding:6px;
+}
+.forecast {
+display:block;
+}
+main {
+    display:flex;
+    flex-direction: column;
+}
+button {
+max-height:40px;
 }
