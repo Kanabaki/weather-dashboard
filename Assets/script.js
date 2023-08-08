@@ -10,7 +10,7 @@
 // WHEN I click on a city in the search history
 // THEN I am again presented with current and future conditions for that city
 const tempCont = document.getElementById("temp");
-const testBtn = document.getElementById("testBtn")
+const srchBtn = document.getElementById("srchBtn")
 const cityName = "Lewisville"
 const apiKey = "98ae7acbbf5494469916763d16791e78"
 const unit = "c or °f"
@@ -44,4 +44,4 @@ fetch(requestF)
     console.log(temp);
 })
 };
-testBtn.addEventListener('click',getApi);
+srchBtn.addEventListener('click',getApi);
