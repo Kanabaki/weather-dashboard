@@ -1,17 +1,22 @@
 # Weather Dashboard
 ## Description
-Provide a short description explaining the what, why, and how of your project. Use the following questions as a guide:
+This is a web app made using the OpenWeather API, to display a weather dashboard that you can see in a browser. 
+Using this app allows you to see today's weather data for a specific city, as well as a five day forecast into the future. 
+By checking out the weather prognostic, you'll be better informed to make decisions based on weather ie. if it rains on Wednesday then mow the lawn on Thursday.
+Check the Usage section for a more detailed description on the functionality.
+This dashboard was created to learn how to utilize an API to dynamically display content on a page. 
+Things learned include learning how to use fetch functions, using DOM traversal to request specific information, using template literals and learning to use an API key.
 
-- What was your motivation?
-- Why did you build this project? (Note: the answer is not "Because it was a homework assignment.")
-- What problem does it solve?
-- What did you learn?
 
 ## Usage
-![Work day graph](./Assets/Mod5_2.png)
+![Weather Dashboard Image]()
 
-Visit Page: https://kanabaki.github.io/calendar-scheduler/
+Visit Page: https://kanabaki.github.io/weather-dashboard/
 Provide instructions and examples for use.
+When I first load the page I see an aside section with a search bar to the left and a title for the app on the top of the page. When I search for a city,
+the right side of the page will display weather information for that city. At the top of this section is a main page with the name of the city searched displaying temperature, a weather icon, wind speed, and humidity.
+Under that section is a 5 day forecast with similar information but for the following days. You can then see that the aside section now contains a history of cities searched, and can be accessed by clicking, to bring up weather info once more.
+
 
 ## License
 MIT License
