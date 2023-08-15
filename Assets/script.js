@@ -26,61 +26,101 @@ fetch(requestF)
     // console.log(response)
     return response.json();
 })
-//attempt to get the temp to display on the page
+//This block appends weather data to the page
 .then(function(data) {
     console.log(data)
-    topCard
-    .innerHTML = "";
-    let date = document.createElement("p");
-    let citytemp = document.createElement("p");
-    let listCity = document.createElement("p");
-    let windSpd = document.createElement("p");
+    topCard.innerHTML = "";
+let date = document.createElement("span");
+let listCity = document.createElement("p");
+let citytemp = document.createElement("p");
+let windSpd = document.createElement("p");
+let humid = document.createElement("p");
     date.textContent = data.list[0].dt_txt.split(" ")[0];
     listCity.textContent = data.city.name;
     citytemp.textContent = data.list[0].main.temp;
     windSpd.textContent = data.list[0].wind.speed;
-    topCard.append(date);
-    topCard.append(listCity);
-    topCard.append(citytemp);
-    topCard.append(windSpd);
-    citytemp.append(" °F");
-    windSpd.append(" mph");
-    console.log(topCard);
+    humid.textContent = data.list[0].main.humidity;
+// topCard.append(date);
+topCard.append(listCity, date);
+// topCard.append(date);
+topCard.append(citytemp);
+topCard.append(windSpd);
+topCard.append(humid);
+citytemp.append(" °F");
+windSpd.append(" mph");
+humid.append(" %");
 
 
+listFive.innerHTML="";
+// for (let i = 0; i < data.list.length; i+=8) { This wouldn't need any condition, but its less efficient if the data structure changes
+for (let i = 0; i < data.list.length; i++) {
+    let fCastHours = data.list[i].dt_txt.split(" ")[1].split(":")[0];
+    // console.log("DATA: ", x)
+    if (fCastHours === "12") {
+        
+        const day = data.list[i]
+        let date = document.createElement("li")
+        let temp = document.createElement("li")
+        let windSpd = document.createElement("li")
+        let humid = document.createElement("li")
+            date.innerHTML = `
+            <span>${day.dt_txt.split(" ")[0]}</span>
+            `
+            temp.innerHTML = `
+            <span class="">Temp: ${day.main.temp} °F</span>
+            `
+            windSpd.innerHTML = `
+        <span> Wind: ${day.wind.speed} mph </span>
+        `
+            humid.innerHTML = `
+            <span>Humidity: ${day.main.humidity}</span>
+            `
+            // const fiveArray = [];
+            listFive.append(date);
+             listFive.appendChild(temp);
+             listFive.appendChild(windSpd);
+             listFive.appendChild(humid);
 
-    // for (let i = 0; i < data.list.length; i+=8) { This wouldn't need any condition, but its less efficient if the data structure changes
-    for (let i = 0; i < data.list.length; i++) {
-        let x = data.list[i].dt_txt.split(" ")[1].split(":")[0];
-        // console.log("DATA: ", x)
-        if (x === "12") {
-            console.log("RESULT: ", data.list[i])
         }
     }
 })
 };
 //function to search cities
-function getDataFromLS() {
+function getDataFromLS(city) {
     let getData = JSON.parse(localStorage.getItem("data"));
-    for (let i = 0; i < getData.length; i++) {
-        let btn = document.createElement("button");
-        btn.innerText = getData[i];
-        btn.onclick = x;
-        asideEl.appendChild(btn);
-    }
+    if (getData){
+getData.push(city)
+
+        for (let i = 0; i < getData.length; i++) {
+            let btn = document.createElement("button");
+            btn.innerText = getData[i];
+            btn.onclick = getSrchInput;
+            asideEl.appendChild(btn);
+        }
+    }else { 
+        const newCityArr = [city]
+ localStorage.setItem("data",JSON.stringify(newCityArr));
+ let btn = document.createElement("button");
+ btn.innerText = city;
+ btn.onclick = getSrchInput;
+ asideEl.appendChild(btn);
+ console.log(btn);
+}
     //getApi(getData)
+    // Want to check if the localStorage exists. if so, push city list to array and loop over the btns. if LS doesn't exist
+    // We need to check if the city is already in, don't want duplicates
 }
 
-getDataFromLS()
 
-function x (e) {
+function getSrchInput (e) {
     let element = e.target.innerText
     getApi(element)
 }
 
 srchBtn.addEventListener('click', function () {
     const cityName = document.getElementById("search").value;
+    getDataFromLS(cityName)
+    
     getApi(cityName)
 });
 
-//Display 5 cards with temperature for 5 days
