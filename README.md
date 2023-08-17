@@ -9,7 +9,7 @@ Things learned include learning how to use fetch functions, using DOM traversal 
 
 
 ## Usage
-![Weather Dashboard Image]()
+![Weather Dashboard Image](./Assets/Weather_Dashboard.PNG)
 
 Visit Page: https://kanabaki.github.io/weather-dashboard/
 Provide instructions and examples for use.
