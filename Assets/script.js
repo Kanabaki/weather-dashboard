@@ -1,6 +1,3 @@
-// I WANT to see the weather outlook for multiple cities
-// SO THAT I can plan a trip accordingly
-// GIVEN a weather dashboard with form inputs
 // WHEN I search for a city
 // THEN I am presented with current and future conditions for that city and that city is added to the search history
 // WHEN I view current weather conditions for that city
@@ -29,20 +26,28 @@ fetch(requestF)
 //This block appends weather data to the page
 .then(function(data) {
     console.log(data)
-    topCard.innerHTML = "";
+    topCard.innerHTML = "";//this clears the topCard before it loads a new one
+    let iconId = data.list[0].weather[0].icon
 let date = document.createElement("span");
 let listCity = document.createElement("p");
+let icon = document.createElement("span");
 let citytemp = document.createElement("p");
 let windSpd = document.createElement("p");
 let humid = document.createElement("p");
     date.textContent = data.list[0].dt_txt.split(" ")[0];
     listCity.textContent = data.city.name;
+    // iconId.textContent = data.list[0].weather[0].icon
     citytemp.textContent = data.list[0].main.temp;
     windSpd.textContent = data.list[0].wind.speed;
     humid.textContent = data.list[0].main.humidity;
-// topCard.append(date);
-topCard.append(listCity, date);
-// topCard.append(date);
+    icon.innerHTML = `
+    <img src=https://openweathermap.org/img/wn/${iconId}@2x.png>
+    `
+
+date.append(icon);
+listCity.append(date)
+topCard.append(listCity)
+
 topCard.append(citytemp);
 topCard.append(windSpd);
 topCard.append(humid);
@@ -58,13 +63,19 @@ for (let i = 0; i < data.list.length; i++) {
     // console.log("DATA: ", x)
     if (fCastHours === "12") {
         
-        const day = data.list[i]
+        const day = data.list[i];
+        iconId = day.weather[0].icon;
         let date = document.createElement("li")
+        let icon = document.createElement("li")
         let temp = document.createElement("li")
         let windSpd = document.createElement("li")
         let humid = document.createElement("li")
+
             date.innerHTML = `
             <span>${day.dt_txt.split(" ")[0]}</span>
+            `
+            icon.innerHTML = `
+            <img src=https://openweathermap.org/img/wn/${iconId}@2x.png>
             `
             temp.innerHTML = `
             <span class="">Temp: ${day.main.temp} °F</span>
@@ -73,10 +84,11 @@ for (let i = 0; i < data.list.length; i++) {
         <span> Wind: ${day.wind.speed} mph </span>
         `
             humid.innerHTML = `
-            <span>Humidity: ${day.main.humidity}</span>
+            <span>Humidity: ${day.main.humidity} mph</span>
             `
             // const fiveArray = [];
             listFive.append(date);
+            listFive.append(icon);
              listFive.appendChild(temp);
              listFive.appendChild(windSpd);
              listFive.appendChild(humid);
@@ -88,10 +100,11 @@ for (let i = 0; i < data.list.length; i++) {
 //function to search cities
 function getDataFromLS(city) {
     let getData = JSON.parse(localStorage.getItem("data"));
-    if (getData){
+    if (getData){//102-110 don't save anything in the localStorage
 getData.push(city)
 
         for (let i = 0; i < getData.length; i++) {
+            // localStorage.setItem("data",JSON.stringify(getData))
             let btn = document.createElement("button");
             btn.innerText = getData[i];
             btn.onclick = getSrchInput;
